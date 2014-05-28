@@ -10,7 +10,7 @@ img {
 	margin		: 0px;
 	width		: 100%;
 	height		: 100%;
-	background	: url('images/audio_play_bg.jpg') no-repeat;	
+	background	: url('./images/audio_play_bg.jpg') no-repeat;	
 }
 
 .mp-ui-content {
@@ -103,7 +103,7 @@ img {
 	top			: 975px;
 	width		: 64px;
 	height		: 64px;
-	background	: url('images/audio_play_volume_icon.png');
+	background	: url('./images/audio_play_volume_icon.png');
 }
 
 .mp-ui-play-control {
@@ -119,44 +119,44 @@ img {
 	float		: left;
 }
 .mp-ui-btn-stop-nor {
-	background	: url('images/audio_play_btn_stop_nor.png');
+	background	: url('./images/audio_play_btn_stop_nor.png');
 }
 
 .mp-ui-btn-stop-focus {
-	background	: url('images/audio_play_btn_stop_focus.png');
+	background	: url('./images/audio_play_btn_stop_focus.png');
 }
 
 .mp-ui-btn-up-nor {
-	background	: url('images/audio_play_btn_up_nor.png');
+	background	: url('./images/audio_play_btn_up_nor.png');
 }
 
 .mp-ui-btn-up-focus {
-	background	: url('images/audio_play_btn_up_focus.png');
+	background	: url('./images/audio_play_btn_up_focus.png');
 }
 
 .mp-ui-btn-play-nor {
-	background	: url('images/audio_play_btn_play_nor.png');
+	background	: url('./images/audio_play_btn_play_nor.png');
 }
 
 .mp-ui-btn-play-focus {
-	background	: url('images/audio_play_btn_play_focus.png');
+	background	: url('./images/audio_play_btn_play_focus.png');
 }
 
 
 .mp-ui-btn-pause-nor {
-	background	: url('images/audio_play_btn_pause_nor.png');
+	background	: url('./images/audio_play_btn_pause_nor.png');
 }
 
 .mp-ui-btn-pause-focus {
-	background	: url('images/audio_play_btn_pause_focus.png');
+	background	: url('./images/audio_play_btn_pause_focus.png');
 }
 
 .mp-ui-btn-down-nor {
-	background	: url('images/audio_play_btn_down_nor.png');
+	background	: url('./images/audio_play_btn_down_nor.png');
 }
 
 .mp-ui-btn-down-focus {
-	background	: url('images/audio_play_btn_down_focus.png');
+	background	: url('./images/audio_play_btn_down_focus.png');
 }
 
 
@@ -171,19 +171,19 @@ img {
 	height		: 64px;
 }
 .mp-ui-btn-allscreen-nor {
-	background	: url('images/audio_play_btn_allscreen_nor.png');
+	background	: url('./images/audio_play_btn_allscreen_nor.png');
 }
 
 .mp-ui-btn-allscreen-focus {
-	background	: url('images/audio_play_btn_allscreen_focus.png');
+	background	: url('./images/audio_play_btn_allscreen_focus.png');
 }
 
 .mp-ui-btn-smallscreen-nor {
-	background	: url('images/audio_play_btn_smallscreen_nor.png');
+	background	: url('./images/audio_play_btn_smallscreen_nor.png');
 }
 
 .mp-ui-btn-smallscreen-focus {
-	background	: url('images/audio_play_btn_smallscreen_focus.png');
+	background	: url('./images/audio_play_btn_smallscreen_focus.png');
 }
 
 
@@ -191,7 +191,7 @@ img {
 	width		: 1617px;
 	margin-left	: 28px;
 	margin-right: 0px;
-	background-image	: url('images/audio_play_progress_bg_middle.png');
+	background-image	: url('./images/audio_play_progress_bg_middle.png');
 	top			: -7px;
 	background-color	: #000;
 	height		: 4px;
@@ -200,7 +200,7 @@ img {
 }
 
 #mp_ui_progress div.ui-slider-bg {
-	background-image	: url('images/audio_play_progress_middle.png');
+	background-image	: url('./images/audio_play_progress_middle.png');
 }
 
 .ui-controlgroup a.ui-slider-handle, a.ui-btn.ui-slider-handle {
@@ -212,7 +212,7 @@ img {
 }
 
 .ui-btn-inner {
-	background-image	: url('images/audio_play_progress_point.png');
+	background-image	: url('./images/audio_play_progress_point.png');
 	background-position : center center;
 }
 
@@ -222,14 +222,14 @@ img {
 	top			: 1004px;
 	height		: 8px;
 	left		: 218px;
-	background-image	: url('images/audio_play_vol_progress_bg_middle.png');
+	background-image	: url('./images/audio_play_vol_progress_bg_middle.png');
 	position	: absolute;
 	border		: none;
 	margin		: 0;
 }
 
 #mp_ui_volume_control div.ui-slider-bg {
-	background-image	: url('images/audio_play_vol_progress_middle.png');
+	background-image	: url('./images/audio_play_vol_progress_middle.png');
 }
 
 #slider-progress {
