@@ -1,5 +1,6 @@
 var MusicPlayer = function(index,playlist){
 	this.audio = $('#mp_audio_player')[0];
+	this.audio.volume = 1;
 	this.playlist = playlist;
 	this.lyricContainer = $('#mp_lyricContainer')[0];  
 	this.lyric = null;
@@ -15,6 +16,9 @@ MusicPlayer.prototype = {
 		};
 		this.audio.onerror = function(){
 		};
+	},
+	setPosition : function(currentTime){
+		this.audio.currentTime = currentTime;
 	},
 	setVolume	: function(volume){
 		if (volume >= 0 && volume <= 100) {
@@ -35,10 +39,20 @@ MusicPlayer.prototype = {
 		this.paused = this.audio.paused;
 		clearInterval(window.ani);
 	},
+	updateStartEndTime : function(){
+		var $this = this;
+		var startTime = document.getElementById('audio_started_time');
+			startTime.innerHTML = "<span>" + $this.formatDuration(parseInt($this.audio.currentTime)) +"</span>";
+		var endTime = document.getElementById('audio_ended_time');
+				endTime.innerHTML = "<span>-" + $this.formatDuration(parseInt($this.audio.duration- $this.audio.currentTime))  +"</span>";
+
+		$('#slider-progress').attr('value',parseInt($this.audio.currentTime));
+		$('#slider-progress').slider( "refresh" );
+
+	},
 	play		: function(songUrl,stop){
 		var $this = this;
 		if(!$this.paused){
-
 			$this.audio.src = songUrl;	
 			$this.lyric = null;	
 			$this.lyricContainer.textContent = 'loading lyric...';
@@ -53,16 +67,22 @@ MusicPlayer.prototype = {
 			if (!$this.paused) {
 				var lyricUrl = $this.audio.src.substring(0,$this.audio.src.lastIndexOf('.')) + '.lyric';
 				$this.getLyric(lyricUrl);
+				$('#slider-progress').attr('max',parseInt($this.audio.duration));
 			}
+			$this.updateStartEndTime();
 			if(!stop){
 				this.play();
 			}
 		};
 
 		$this.audio.ontimeupdate = function(){
-			if (!$this.lyric) {
+
+			if(!$this.lyric){
 				return;
 			}
+
+			$this.updateStartEndTime();
+
 			for (var i = 0, l = $this.lyric.length; i < l; i++) {
                 if (this.currentTime > $this.lyric[i][0] - 0.50 /*preload the lyric by 0.50s*/ ) {
                     //single line display mode
@@ -71,43 +91,35 @@ MusicPlayer.prototype = {
                     var line = document.getElementById('line-' + i),
                         prevLine = document.getElementById('line-' + (i > 0 ? i - 1 : i));
                     prevLine.className = '';
-                    //randomize the color of the current line of the lyric
                     line.className = 'current-line-' + $this.lyricStyle;
                     $this.lyricContainer.style.top = 420 - line.offsetTop + 'px';
-					//set the opacity of before or after style
+					$this.lyricContainer.style.display = 'block';
 
 					var beforeShowLength = i < 8 ? i : 8;
 					var beforeOpacity =8;
 					for(var j=i;j >= i - beforeShowLength;j--){
 						var opacityLine = document.getElementById('line-' + j);	
-						opacityLine.style.opacity = beforeOpacity/ 10; 
-						beforeOpacity--;
+						if(opacityLine){
+							opacityLine.style.opacity = beforeOpacity/ 10; 
+							beforeOpacity--;
+						}
 					}
 
 					var total = $this.lyric.length;
-					var afterShowLength = total - i > 8 ? 8 : total -i;	
-					var afterOpacity = 8;
+					var afterShowLength = total - i > 10 ? 10 : total -i;	
+					var afterOpacity = 10;
 					for (var k =i; k<= i + afterShowLength; k++) {
 						var opacityLine = document.getElementById('line-' + k);	
-						opacityLine.style.opacity = afterOpacity/ 10; 
-						afterOpacity --;
+						if(opacityLine){
+							opacityLine.style.opacity = afterOpacity/ 10; 
+							afterOpacity--;
+						}
 					}
-
 
                 };
             }
 		};
-		window.ani = setInterval(function(){
-			var startTime = document.getElementById('audio_started_time');
-			startTime.innerHTML = "<span>" + $this.formatDuration(parseInt($this.audio.currentTime)) +"</span>";
-			var endTime = document.getElementById('audio_ended_time');
-				endTime.innerHTML = "<span>-" + $this.formatDuration(parseInt($this.audio.duration- $this.audio.currentTime))  +"</span>";
-		},1000);
-							
-		while(parseInt($this.audio.currentTime - $this.audio.duration) === 0) {
-				clearInterval(window.ani);
-		}
-
+	
 	},
 	playNext	: function(){
 		var nextIndex= this.currentIndex;
@@ -247,6 +259,7 @@ MusicPlayer.prototype = {
             fragment.appendChild(line);
         });
         this.lyricContainer.appendChild(fragment);
+		this.lyricContainer.style.display = 'none';
 		this.lyricContainer.style.top = 420 + "px";
 	},
 	formatDuration : function(time){
@@ -311,31 +324,6 @@ $(document).ready(function(){
 				default	:
 					break;
 			}
-		//	if( !!idAttr ) {
-		//		if(idAttr === 'audio_play') {
-		//			if (played) {
-		//				player.pause();
-		//			} else {
-		//				player.play(currSongUrl);
-		//			}
-		//			
-		//			var first = played ? 'pause' : 'play';
-		//			var second = played ? 'play' : 'pause';
-		//			$(this).attr('class',$(this).attr('class').replace(first,second));
-		//			played = !played;
-		//		} else if (idAttr === 'audio_play_screen_controller') {
-		//			var first = fullscreen ? 'smallscreen' : 'allscreen';
-		//			var second = fullscreen ? 'allscreen'  : 'smallscreen';
-		//			$(this).attr('class',$(this).attr('class').replace(first,second));
-		//			fullscreen = !fullscreen;
-		//		} else if (idAttr === 'audio_pre') {
-		//			player.playPre();
-		//		} else if (idAttr === 'audio_pre') {
-		//			player.playNext();
-		//		} else if (idAttr === 'audio_stop'){
-		//			player.playPre();
-		//		}
-		//	}
 		});
 	});		
 
@@ -345,6 +333,11 @@ $(document).ready(function(){
 			player.setVolume(parseInt(volume));
 		}
 	});
-	
+	$('#slider-progress').slider({
+		stop : function(event,ui){
+			var currentTime = event.target.value;
+			player.setPosition(currentTime);
+		}
+	});
 
 });
