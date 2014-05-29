@@ -64,7 +64,7 @@ MusicPlayer.prototype = {
 			$this.lyric = null;	
 			$this.audio.src = $this.playlist[$this.currentIndex].songUrl;
 			//$this.lyricContainer.textContent = 'loading lyric...';
-			//$this.lyricStyle = Math.floor(Math.random() * 4);
+			$this.lyricStyle = Math.floor(Math.random() * 5);
 		} else {
 			if(!stop){
 				$this.audio.play();

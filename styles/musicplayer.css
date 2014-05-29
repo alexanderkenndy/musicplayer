@@ -15,64 +15,34 @@ img {
 
 .mp-ui-content {
 	width		: 100%;
-	height		: 919px;
-	position	: absolute;
+	height		: 800px;
 }
 
 .mp-ui-progressbar {
 	width		: 100%;
-	position	: absolute;
-	top			: 919px;
 }
 
 .mp-ui-album-container {
-	position	: absolute;
-	left		: 181px;
-	top			: 165px;
-	width		: 600px;
-	height		: 600px;
-	float		: left;
+	margin-left: 181px;
+	margin-top: 165px;
+	width: 600px;
+	height: 600px;
+	float: left;
 }
 
 .mp-ui-metadata {
-	position	: absolute;
-	left		: 802px;
-	width		: 200px;
-}
-
-.mp-ui-song-label {
-	top			: 314px;
-}
-
-.mp-ui-song {
-	top			: 355px;
-}
-
-.mp-ui-artist-label {
-	top			: 426px;
-}
-
-.mp-ui-artist {
-	top			: 464px;
-}
-
-.mp-ui-album-label {
-	top			: 529px;
-}
-
-.mp-ui-album {
-	top			: 566px;
+	float: left;
+	margin-left: 21px;
+	margin-top: 265px;
 }
 
 .mp-ui-label {
 	color		: #b9babc;
 	font-size	: 24px;
 	text-align	: left;
-	position	: absolute;
 }
 
 .mp-ui-value {
-	position	: absolute;
 	color		: #fff;
 	font-size	: 28px;
 	text-align	: left;
@@ -80,14 +50,13 @@ img {
 
 .mp-ui-lyric {
 	position	: absolute;
-	left		: 1136px;
 	overflow	: hidden;
 	color		: #949494;
-	top			: 37px;
 	height		: 839px;
 	width		: 519px;
 	font-size	: 28px;
 	text-align	: center;
+	left		: 1136px;
 }
 
 #mp_lyricContainer {
@@ -97,21 +66,21 @@ img {
 	color		: #fff;
 }
 
+#mp_ui_volume_control {
+	float		: left;
+	width		: 300px;
+}
 .mp-ui-volume-icon {
-	position	: absolute;
-	left		: 145px;
-	top			: 975px;
 	width		: 64px;
 	height		: 64px;
 	background	: url('./images/audio_play_volume_icon.png');
+	float: left;
+	margin-top: 18px;
 }
 
 .mp-ui-play-control {
-	position	: absolute;
-	left		: 693px;
-	top			: 965px;
-	width		: 535px;
-	height		: 100px;
+	width		: 400px;
+	margin		: 0 auto;
 }
 .mp-ui-play-control > div{
 	width		: 100px;
@@ -161,14 +130,13 @@ img {
 
 
 .mp-ui-btn-screen {
-	position	: absolute;
-	left		: 1711px;
-	top			: 975px;
+	float		: right;
 }
 
 .mp-ui-btn-screen > div {
 	width		: 64px;
 	height		: 64px;
+	margin-top	: 18px;
 }
 .mp-ui-btn-allscreen-nor {
 	background	: url('./images/audio_play_btn_allscreen_nor.png');
@@ -188,9 +156,9 @@ img {
 
 
 #mp_ui_progress div.ui-slider {
-	width		: 1617px;
-	margin-left	: 28px;
-	margin-right: 0px;
+	width: 80%;
+	margin-left: 24px;
+	margin-right: 14px;
 	background-image	: url('./images/audio_play_progress_bg_middle.png');
 	top			: -7px;
 	background-color	: #000;
@@ -208,7 +176,7 @@ img {
 	height		: 18px;
 	border-top	: none;
 	border-color: #0beeee; 
-	margin		: -10px 0 0 -10px;
+	margin		: -10px 0 0 0px;
 }
 
 .ui-btn-inner {
@@ -217,15 +185,12 @@ img {
 }
 
 #mp_ui_volume_control div.ui-slider {
-	width		: 150px;
-	background-color	: #000;
-	top			: 1004px;
-	height		: 8px;
-	left		: 218px;
-	background-image	: url('./images/audio_play_vol_progress_bg_middle.png');
-	position	: absolute;
-	border		: none;
-	margin		: 0;
+	width: 150px;
+	background-color: #000;
+	top: 42px;
+	height: 8px;
+	background-image: url('./images/audio_play_vol_progress_bg_middle.png');
+	border: none;
 }
 
 #mp_ui_volume_control div.ui-slider-bg {
@@ -241,17 +206,15 @@ img {
 }
 
 #audio_started_time {
-	width		: 50px;
 	color		: #b9babc;
 	text-align	: right;
-	margin-left	: 74px;
+	margin-left	: 52px;
 	font-size	: 28px;
 	display		: inline-block;
 }
 
 #audio_ended_time {
 	display		: inline-block;
-	margin-left	: 10px;
 	color		: #b9babc;
 	font-size	: 28px;
 }
@@ -278,4 +241,10 @@ img {
 
 .current-line-4 {
     color: #FAFA17;
+}
+
+.mp-ui-controlbar {
+	margin-left: 152px;
+	width: 80%;
+	height: 100px;
 }
