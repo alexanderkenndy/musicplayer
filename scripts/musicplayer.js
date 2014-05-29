@@ -315,16 +315,16 @@ var  lyricContent2 =
 +"\n[03:27.11]誓言飘过 无所谓语言"
 +"\n[03:31.83]";
 	var songConent1 ={
-		songName	: 'caibutou',
-		artistName	: 'ding dang',		
-		albumName	: 'ding dang',
+		songName	: '猜不透',
+		artistName	: '丁当',		
+		albumName	: '猜不透',
 		songUrl		: 'cai_bu_tou.mp3',
 		lyricContent: lyricContent1
 	};
 	var songConent2 ={
-		songName	: 'yan_lei_de_cuo_jue',
-		artistName	: 'yan_lei_de_cuo_jue',		
-		albumName	: 'yan_lei_de_cuo_jue',
+		songName	: '眼泪的错觉',
+		artistName	: '群星',		
+		albumName	: '眼泪的错觉',
 		songUrl		: 'yan_lei_de_cuo_jue.mp3',
 		lyricContent: lyricContent2
 	};
