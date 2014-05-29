@@ -1,8 +1,8 @@
 var MusicPlayer = function(index,playlist){
-	this.audio = $('#mp_audio_player')[0];
+	this.audio = document.getElementById('mp_audio_player');
 	this.audio.volume = 1;
 	this.playlist = playlist;
-	this.lyricContainer = $('#mp_lyricContainer')[0];  
+	this.lyricContainer = document.getElementById('mp_lyricContainer');  
 	this.lyric = null;
 	this.paused = false;
 	this.currentIndex = index;
@@ -12,6 +12,7 @@ var MusicPlayer = function(index,playlist){
 MusicPlayer.prototype = {
 	constructor	: MusicPlayer,
 	init		: function(){
+		this.setMetadata();
 		this.audio.onended = function(){
 		};
 		this.audio.onerror = function(){
@@ -25,19 +26,26 @@ MusicPlayer.prototype = {
 			this.audio.volume = volume / 100;
 		}
 	},
+	setMetadata : function(){
+		this.paused = false;
+		var songConent = this.playlist[this.currentIndex];	
+
+		var songName = songConent.songName;
+		$('#mp_songname').html(songName);
+
+		var artistName = songConent.artistName;
+		$('#mp_artistname').html(artistName);
+
+		var albumName = songConent.albumName;
+		$('#mp_albumname').html(albumName);
+	},
 	stop		: function(){
-		var stopIndex= this.currentIndex;
-		var stopItem = this.playlist[stopIndex]; 
-		if(!!stopItem){
-			this.paused = false;
-			this.play(stopItem,true);
-		}
-		//this.currentIndex = stopIndex;
+		this.setMetadata();
+		this.play(true);
 	},
 	pause		: function(){
 		this.audio.pause();
 		this.paused = this.audio.paused;
-		clearInterval(window.ani);
 	},
 	updateStartEndTime : function(){
 		var $this = this;
@@ -50,12 +58,12 @@ MusicPlayer.prototype = {
 		$('#slider-progress').slider( "refresh" );
 
 	},
-	play		: function(songUrl,stop){
+	play		: function(stop){
 		var $this = this;
 		if(!$this.paused){
-			$this.audio.src = songUrl;	
 			$this.lyric = null;	
-			$this.lyricContainer.textContent = 'loading lyric...';
+			$this.audio.src = $this.playlist[$this.currentIndex].songUrl;
+			//$this.lyricContainer.textContent = 'loading lyric...';
 			//$this.lyricStyle = Math.floor(Math.random() * 4);
 		} else {
 			if(!stop){
@@ -122,36 +130,85 @@ MusicPlayer.prototype = {
 	
 	},
 	playNext	: function(){
-		var nextIndex= this.currentIndex;
-		if (nextIndex < this.playlist.length -1) {
-			nextIndex +=1;
+		if (this.currentIndex < this.playlist.length -1) {
+			this.currentIndex +=1;
 		}
-
-		var nextItem = this.playlist[nextIndex]; 
-		if(!!nextItem){
-			this.paused = false;
-			this.play(nextItem);
-		}
-		this.currentIndex = nextIndex;
+		this.setMetadata();
+		this.play();
 	},
 	playPre		: function(){
 		var preIndex = this.currentIndex;
-		if (preIndex > 0) {
-			preIndex -=1;
+		if (this.currentIndex > 0) {
+			this.currentIndex -=1;
 		}
-		var preItem = this.playlist[preIndex];
-		if(!!preItem){
-			this.paused = false;
-			this.play(preItem);
-		}
-		this.currentIndex = preIndex;
+		this.setMetadata();
+		this.play();
 	},
 	getLyric	: function(url){
 		//TODO url is the lyric path
 		var $this = this;
+		var lyricContent = this.playlist[this.currentIndex].lyricContent;
+		//this.lyricContainer.textContent = "loading lyric ...";
+		
+		$this.lyric = $this.parseLyric(lyricContent);
+		$this.appendLyric($this.lyric);
+		//TODO fail to load lyric	
+	},
+	parseLyric	: function(text){
+		//get each line from the text
+        var lines = text.split('\n'),
+            //this regex mathes the time [00.12.78]
+            pattern = /\[\d{2}:\d{2}.\d{2}\]/g,
+            result = [];
+        //exclude the description parts or empty parts of the lyric
+        while (!pattern.test(lines[0])) {
+            lines = lines.slice(1);
+        };
+        //remove the last empty item
+        lines[lines.length - 1].length === 0 && lines.pop();
+        //display all content on the page
+        lines.forEach(function(v, i, a) {
+            var time = v.match(pattern),
+                value = v.replace(pattern, '');
+            time.forEach(function(v1, i1, a1) {
+                //convert the [min:sec] to secs format then store into result
+                var t = v1.slice(1, -1).split(':');
+                result.push([parseInt(t[0], 10) * 60 + parseFloat(t[1]), value]);
+            });
+        });
+        //sort the result by time
+        result.sort(function(a, b) {
+            return a[0] - b[0];
+        });
+		this.lyricloaded = true;
+        return result;
+	},
+	appendLyric : function(lyric){
+        var fragment = document.createDocumentFragment();
+        //clear the lyric container first
+        this.lyricContainer.innerHTML = '';
+        lyric.forEach(function(v, i, a) {
+            var line = document.createElement('p');
+            line.id = 'line-' + i;
+            line.textContent = v[1];
+            fragment.appendChild(line);
+        });
+        this.lyricContainer.appendChild(fragment);
+		this.lyricContainer.style.display = 'none';
+		this.lyricContainer.style.top = 420 + "px";
+	},
+	formatDuration : function(time){
+		var pre = parseInt(time / 60);
+		var left = time - pre * 60;
+		pre = pre < 10 ? ("0" + pre ) : pre;
+		left = left < 10 ? ("0" + left) : left;
+		return pre + ":" + left;
+	}
 
-		this.lyricContainer.textContent = "loading lyric ...";
-		var lyricContent = 
+};
+$(document).ready(function(){
+	//TODO make a fake playlist
+		var lyricContent1 = 
 "[ti:猜不透]"
 +"\n[ar:丁当]" 
 +"\n[al:我爱上的]"
@@ -212,70 +269,71 @@ MusicPlayer.prototype = {
 +"\n[03:33.10]我已不想追究" 
 +"\n[03:35.91]越是在乎的人越是猜不透" 
 +"\n[03:44.63]" ;
-		
 
-		
-		$this.lyric = $this.parseLyric(lyricContent);
-		$this.appendLyric($this.lyric);
-		//TODO fail to load lyric	
-	},
-	parseLyric	: function(text){
-		//get each line from the text
-        var lines = text.split('\n'),
-            //this regex mathes the time [00.12.78]
-            pattern = /\[\d{2}:\d{2}.\d{2}\]/g,
-            result = [];
-        //exclude the description parts or empty parts of the lyric
-        while (!pattern.test(lines[0])) {
-            lines = lines.slice(1);
-        };
-        //remove the last empty item
-        lines[lines.length - 1].length === 0 && lines.pop();
-        //display all content on the page
-        lines.forEach(function(v, i, a) {
-            var time = v.match(pattern),
-                value = v.replace(pattern, '');
-            time.forEach(function(v1, i1, a1) {
-                //convert the [min:sec] to secs format then store into result
-                var t = v1.slice(1, -1).split(':');
-                result.push([parseInt(t[0], 10) * 60 + parseFloat(t[1]), value]);
-            });
-        });
-        //sort the result by time
-        result.sort(function(a, b) {
-            return a[0] - b[0];
-        });
-		this.lyricloaded = true;
-        return result;
-	},
-	appendLyric : function(lyric){
-        var fragment = document.createDocumentFragment();
-        //clear the lyric container first
-        this.lyricContainer.innerHTML = '';
-        lyric.forEach(function(v, i, a) {
-            var line = document.createElement('p');
-            line.id = 'line-' + i;
-            line.textContent = v[1];
-            fragment.appendChild(line);
-        });
-        this.lyricContainer.appendChild(fragment);
-		this.lyricContainer.style.display = 'none';
-		this.lyricContainer.style.top = 420 + "px";
-	},
-	formatDuration : function(time){
-		var pre = parseInt(time / 60);
-		var left = time - pre * 60;
-		pre = pre < 10 ? ("0" + pre ) : pre;
-		left = left < 10 ? ("0" + left) : left;
-		return pre + ":" + left;
-	}
+var  lyricContent2 =
+"[00:00.34]眼泪的错觉"
++"\n[00:00.44]演唱：群星"
++"\n[00:00.54]"
++"\n[00:00.94]眼泪的错觉 哭泣的依恋"
++"\n[00:05.51]爱在昨天 不停的想念"
++"\n[00:10.34]花蕊的凋谢 情感的善变"
++"\n[00:15.06]誓言飘过 无所谓语言"
++"\n[00:20.32]眼泪的错觉 哭泣的依恋"
++"\n[00:24.79]爱在昨天 不停的想念"
++"\n[00:29.53]花蕊的凋谢 情感的善变"
++"\n[00:34.29]誓言飘过 无所谓语言"
++"\n[00:39.51]为什么要分手 为什么抛弃所有"
++"\n[00:44.53]为什么剩我一人孤独等候"
++"\n[00:48.87]能不能再爱我 能不能陪着我"
++"\n[00:54.26]能不能永远一生不放弃我"
++"\n[00:58.86]为什么要分手 为什么抛弃所有"
++"\n[01:03.74]为什么剩我一人孤独等候"
++"\n[01:08.27]能不能再爱我 能不能陪着我"
++"\n[01:13.56]能不能永远一生不放弃我"
++"\n[01:17.71]时光已经停留 爱人已经远走"
++"\n[01:26.70]花蕊凋谢的接受"
++"\n[01:31.38]让寂寞搁浅 挥挥手"
++"\n[01:39.14]"
++"\n[01:56.55]眼泪的错觉 哭泣的依恋"
++"\n[02:00.82]爱在昨天 不停的想念"
++"\n[02:05.58]花蕊的凋谢 情感的善变"
++"\n[02:10.30]誓言飘过 无所谓语言"
++"\n[02:15.47]为什么要分手 为什么抛弃所有"
++"\n[02:20.42]为什么剩我一人孤独等候"
++"\n[02:24.88]能不能再爱我 能不能陪着我"
++"\n[02:30.21]能不能永远一生不放弃我"
++"\n[02:34.63]为什么要分手 为什么抛弃所有"
++"\n[02:39.67]为什么剩我一人孤独等候"
++"\n[02:44.01]能不能再爱我 能不能陪着我"
++"\n[02:49.42]能不能永远一生不放弃我"
++"\n[02:53.70]时光已经停留 爱人已经远走"
++"\n[03:02.69]花蕊凋谢的接受"
++"\n[03:07.45]让寂寞搁浅 挥挥手"
++"\n[03:13.42]眼泪的错觉 哭泣的依恋"
++"\n[03:17.57]爱在昨天 不停的想念"
++"\n[03:22.39]花蕊的凋谢 情感的善变"
++"\n[03:27.11]誓言飘过 无所谓语言"
++"\n[03:31.83]";
+	var songConent1 ={
+		songName	: 'caibutou',
+		artistName	: 'ding dang',		
+		albumName	: 'ding dang',
+		songUrl		: 'cai_bu_tou.mp3',
+		lyricContent: lyricContent1
+	};
+	var songConent2 ={
+		songName	: 'yan_lei_de_cuo_jue',
+		artistName	: 'yan_lei_de_cuo_jue',		
+		albumName	: 'yan_lei_de_cuo_jue',
+		songUrl		: 'yan_lei_de_cuo_jue.mp3',
+		lyricContent: lyricContent2
+	};
 
-};
-$(document).ready(function(){
-	//TODO make a fake playlist
-	var playlist =['cai_bu_tou.mp3'];
-	var currSongUrl = 'cai_bu_tou.mp3';
+	var playlist =[];
+	playlist.push(songConent1);
+	playlist.push(songConent2);
 	var player = new MusicPlayer(0,playlist);
+	player.init();
 
 	var played = false;
 	var fullscreen = true;
@@ -303,7 +361,7 @@ $(document).ready(function(){
 					if (played) {
 						player.pause();
 					} else {
-						player.play(currSongUrl);
+						player.play();
 					}
 					
 					var first = played ? 'pause' : 'play';

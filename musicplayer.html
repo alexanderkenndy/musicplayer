@@ -1,64 +1,60 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-		<meta name="viewport"
-		content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
-		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-		<link rel="stylesheet" href="lib/jquery.mobile-1.2.0.min.css" />
-		<script src="lib/jquery.mobile-1.2.0.min.js"></script>
-		
-		
-
-		<title>Music Player</title>
-		<link rel="stylesheet" type="text/css" href="styles/musicplayer.css">
-		<script type="text/javascript" src="scripts/musicplayer.js"></script>
-	</head>
-	<body>
-		<div class="mp-ui-container">
-			<div class="mp-ui-content">
-				<div class="mp-ui-album-container">
-					<img src="styles/images/audio_play_album_image.png" />	
-				</div>
-				<div class="mp-ui-metadata">
-					<div class="mp-ui-label mp-ui-song-label ">Song</div>	
-					<div class="mp-ui-value mp-ui-song">Apologize</div>	
-					<div class="mp-ui-label mp-ui-artist-label">Artist</div>	
-					<div class="mp-ui-value mp-ui-artist">TIMBO LAND</div>	
-					<div class="mp-ui-label mp-ui-album-label">Album</div>	
-					<div class="mp-ui-value mp-ui-album">The Way I are</div>	
-				</div>
-				<div class="mp-ui-lyric">
-					<div id="mp_lyricContainer"></div>
-				</div>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+	<link rel="stylesheet" href="lib/jquery.mobile-1.2.0.min.css" />
+	<script src="lib/jquery.mobile-1.2.0.min.js"></script>
+	<title>Music Player</title>
+	<link rel="stylesheet" type="text/css" href="styles/musicplayer.css">
+	<script type="text/javascript" src="scripts/musicplayer.js"></script>
+</head>
+<body>
+	<div class="mp-ui-container">
+		<div class="mp-ui-content">
+			<div class="mp-ui-album-container">
+				<img src="styles/images/audio_play_album_image.png" />	
 			</div>
-			<div class="mp-ui-progressbar" id="mp_ui_progress">
-				<audio src="cai_bu_tou.mp3" id="mp_audio_player">
-					Sorry,your browser doesn't support audio	
-				</audio>
-				<div id="audio_started_time">
-					<span>00:00</span>
-				</div>
-				<input type="range" name="slider-2" id="slider-progress"  data-highlight="true" value="0" min="0" max="100" step="1">
-				<div id="audio_ended_time">
-					<span>00:00</span>
-				</div>
+			<div class="mp-ui-metadata">
+				<div class="mp-ui-label mp-ui-song-label ">Song</div>	
+				<div class="mp-ui-value mp-ui-song" id="mp_songname">Apologize</div>	
+				<div class="mp-ui-label mp-ui-artist-label">Artist</div>	
+				<div class="mp-ui-value mp-ui-artist" id="mp_artistname">TIMBO LAND</div>	
+				<div class="mp-ui-label mp-ui-album-label">Album</div>	
+				<div class="mp-ui-value mp-ui-album" id="mp_albumname">The Way I are</div>	
 			</div>
-			<div class="mp-ui-controlbar">
-				<div id="mp_ui_volume_control">
-					<div class="mp-ui-volume-icon"></div>	
-					<input type="range" name="slider-2" id="slider-volume"  data-highlight="true" value="100" min="0" max="100">
-				</div>
-				<div class="mp-ui-play-control" id="audio_play_controller">
-					<div class="mp-ui-btn-stop-nor" id="audio_stop"></div>	
-					<div class="mp-ui-btn-up-nor" id="audio_pre"></div>	
-					<div class="mp-ui-btn-play-nor" id="audio_play"></div>	
-					<div class="mp-ui-btn-down-nor" id="audio_next"></div>	
-				</div>
-				<div class="mp-ui-btn-screen">
-					<div class="mp-ui-btn-allscreen-nor" id="audio_play_screen_controller"></div>	
-				</div>
+			<div class="mp-ui-lyric">
+				<div id="mp_lyricContainer"></div>
 			</div>
 		</div>
-	</body>
+		<div class="mp-ui-progressbar" id="mp_ui_progress">
+			<audio src="cai_bu_tou.mp3" id="mp_audio_player">
+				Sorry,your browser doesn't support audio	
+			</audio>
+			<div id="audio_started_time">
+				<span>00:00</span>
+			</div>
+			<input type="range" name="slider-2" id="slider-progress"  data-highlight="true" value="0" min="0" max="100" step="1">
+			<div id="audio_ended_time">
+				<span>00:00</span>
+			</div>
+		</div>
+		<div class="mp-ui-controlbar">
+			<div id="mp_ui_volume_control">
+				<div class="mp-ui-volume-icon"></div>	
+				<input type="range" name="slider-2" id="slider-volume"  data-highlight="true" value="100" min="0" max="100">
+			</div>
+			<div class="mp-ui-play-control" id="audio_play_controller">
+				<div class="mp-ui-btn-stop-nor" id="audio_stop"></div>	
+				<div class="mp-ui-btn-up-nor" id="audio_pre"></div>	
+				<div class="mp-ui-btn-play-nor" id="audio_play"></div>	
+				<div class="mp-ui-btn-down-nor" id="audio_next"></div>	
+			</div>
+			<div class="mp-ui-btn-screen">
+				<div class="mp-ui-btn-allscreen-nor" id="audio_play_screen_controller"></div>	
+			</div>
+		</div>
+	</div>
+</body>
 </html>
