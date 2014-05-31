@@ -1,0 +1,35 @@
+{
+	"name": "musicplayer",
+	"version": "0.0.1",
+	"description": "html5 music player with sync lyric",
+	"main": "index.html",
+	"scripts": {
+	  "test": ""
+	},
+	"repository": {
+	  "type": "git",
+	  "url": "https://github.com/alexanderkenndy/musicplayer.git",
+	  "branch":"",
+	  "SHA" :""
+
+	},
+	"devDependencies":{
+		"express" : "3.x"
+	},
+	"keywords": [
+	  "html5",
+	  "audio"
+	],
+	"author": "alexanderkenndy",
+	"licenses": [
+		 {
+			 "type": "MIT",
+			 "url": "https://github.com/adobe/brackets/blob/master/LICENSE"
+		 }
+	],
+
+	"issues": {
+		"url": "https://github.com/alexanderkenndy/musicplayer/issues"
+	},
+	"homepage": "https://github.com/alexanderkenndy/musicplayer"
+}
