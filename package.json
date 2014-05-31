@@ -14,7 +14,7 @@
 
 	},
 	"devDependencies":{
-		"express" : "3.x"
+		"express" : "3.1.1"
 	},
 	"keywords": [
 	  "html5",
