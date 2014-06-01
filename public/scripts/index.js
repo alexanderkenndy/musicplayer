@@ -207,6 +207,8 @@ MusicPlayer.prototype = {
 
 };
 $(document).ready(function(){
+	var winHeight = window.screen.height;
+	//$('#mp_ui_content').css('height',winHeight -132);
 	//TODO make a fake playlist
 		var lyricContent1 = 
 "[ti:猜不透]"
