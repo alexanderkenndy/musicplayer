@@ -42,6 +42,7 @@ Logger.prototype.log = function(msg,level){
 Logger.prototype.print = function(msg,level) {
 	if(LoggerMap[outputlevel] && LoggerMap[outputlevel]>  LoggerMap[level]) return ;
 	//TODO fix the log level and add file output
+	//TODO add option of date format
 	msg = "["+ level.toUpperCase()+"] " + new Date() + " "  + msg + '\n';
 	var outs = output.split(',');
 	for(var i=0;i<outs.length;i++){
