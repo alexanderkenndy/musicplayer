@@ -3,6 +3,7 @@ var _self = {
 	version	: '0.0.1',
 	description	: 'Music Player implemented html audio tag with syn lyric',
 	port	: 3000,
+	debug	: true,
 	log		: {
 		level	: 'debug',//default info
 		output	: 'console,file', //default console

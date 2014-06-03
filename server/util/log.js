@@ -49,5 +49,5 @@ Logger.prototype.print = function(msg) {
 	}
 }
 
-module.exports = Logger;
+module.exports = new Logger();
 

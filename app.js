@@ -9,17 +9,17 @@
 var http = require('http');
 var express = require('express');
 var path = require('path');
-
 var config = require('./config.js');
 var logger = require('./server/util/log.js');
 var app = module.exports.app = express();
 var server = module.exports.server = http.createServer(app);
 
+var isDebugMode = config.debug;
 app.set('view engine',"ejs");
 app.set('views',__dirname + '/views/');
 app.set('port',process.env.PORT || config.port);
 
-app.use(express.favicon('./favicon.png');
+app.use(express.favicon('./favicon.png'));
 app.use(express.logger());
 app.use(express.methodOverride());
 app.use(express.cookieParser('alexander'));
@@ -39,9 +39,9 @@ server.listen(app.get('port'),function(err){
 		logger.error('Exception:'+ err);
 	}else {
 		if (isDebugMode) {
-			logger.debug('Music Server running on port' + app.get('port'));
+			logger.debug('Music Server running on port ' + app.get('port'));
 		} else {
-			logger.info('Music Server running on port' + app.get('port'));
+			logger.info('Music Server running on port ' + app.get('port'));
 		}
 	}
 });
