@@ -1,7 +1,9 @@
 'use strict';
-var output = require('../../config.js').log.output;
 var fs = require('fs');
-var path = require('../../config.js').log.path;
+var config = require('../../config.js');
+var output = config.log.output;
+var path = config.log.path;
+var outputlevel = config.log.level;
 
 var Logger = function(){
 	this.INFO = 'info';
@@ -9,6 +11,13 @@ var Logger = function(){
 	this.DEBUG = 'debug';
 	this.ERROR = 'error';
 }
+
+var LoggerMap = {
+	'info'	:1,
+	'warn'	:2,
+	'debug'	:3,
+	'error'	:4
+};
 Logger.prototype.info  = function(msg){
 	this.log(msg,this.INFO);
 };
@@ -22,6 +31,7 @@ Logger.prototype.error = function(msg){
 	this.log(msg,this.ERROR);
 };
 Logger.prototype.log = function(msg,level){
+	level = !level ? 'info' : level;
 	if (typeof message === 'function' || typeof message === 'object') {
 		this.print(msg.toString(),level);	
 	} else {
@@ -29,8 +39,10 @@ Logger.prototype.log = function(msg,level){
 	}
 };
 
-Logger.prototype.print = function(msg) {
+Logger.prototype.print = function(msg,level) {
+	if(LoggerMap[outputlevel] && LoggerMap[outputlevel]>  LoggerMap[level]) return ;
 	//TODO fix the log level and add file output
+	msg = "["+ level.toUpperCase()+"] " + new Date() + " "  + msg + '\n';
 	var outs = output.split(',');
 	for(var i=0;i<outs.length;i++){
 		switch(outs[i]){
@@ -39,8 +51,9 @@ Logger.prototype.print = function(msg) {
 				break;
 			case 'file'	  :
 				if(!path){
-					path = '/tmp/log';
+					path = '/tmp/log/music.log';
 				}
+				fs.appendFileSync(path,msg);
 				break;
 			default	:
 				console.log(msg);
