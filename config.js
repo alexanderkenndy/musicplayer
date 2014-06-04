@@ -5,7 +5,7 @@ var _self = {
 	port	: 3000,
 	debug	: false,
 	log		: {
-		level	: 'fatal',//default info [info,warn,debug,error]
+		level	: 'info',//default info [info,warn,debug,error]
 		output	: 'console,file', //default console  [console,file]
 		path	: '/tmp/music_log/music.log' //default /tmp/log/ 
 	}
